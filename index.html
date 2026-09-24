@@ -10,8 +10,8 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       margin: 0;
       padding: 16px;
-      background-color: var(--tg-theme-bg-color, #f4f6f8);
-      color: var(--tg-theme-text-color, #222);
+      background-color: #121212;
+      color: #ffffff;
     }
     header {
       text-align: center;
@@ -23,7 +23,7 @@
     }
     p.subtitle {
       font-size: 13px;
-      color: #666;
+      color: #aaa;
       margin-top: 0;
     }
     .grid {
@@ -31,46 +31,47 @@
       gap: 14px;
     }
     .card {
-      background: var(--tg-theme-secondary-bg-color, #ffffff);
+      background: #1e1e1e;
       border-radius: 12px;
       padding: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      gap: 10px;
     }
     .card h3 {
-      margin: 0 0 6px 0;
+      margin: 0;
       font-size: 17px;
+      color: #fff;
     }
-    .card a {
-      color: #0088cc;
+    .card a.link {
+      color: #29b6f6;
       text-decoration: none;
       font-size: 13px;
-      margin-bottom: 12px;
       word-break: break-all;
     }
     .price {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: bold;
-      color: #2e7d32;
-      margin-bottom: 12px;
+      color: #4caf50;
     }
     .btn {
       background-color: #0088cc;
-      color: #fff;
+      color: #ffffff !important;
       border: none;
-      padding: 10px;
+      padding: 12px;
       border-radius: 8px;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 15px;
       cursor: pointer;
       text-align: center;
-      text-decoration: none;
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
     }
     .loading {
       text-align: center;
-      color: #777;
+      color: #888;
       font-size: 15px;
       margin-top: 30px;
     }
@@ -80,7 +81,7 @@
 
   <header>
     <h1>የቴሌግራም ቻናል ማስታወቂያዎች</h1>
-    <p class="subtitle">የሚፈልጉትን ቻናል መርጠው በቀጥታ በቦቱ ያዝዙ</p>
+    <p class="subtitle">ቻናሉን መርጠው የቆይታ ጊዜውን በቦቱ ይወስኑ</p>
   </header>
 
   <div id="channel-list" class="grid">
@@ -93,7 +94,6 @@
       window.Telegram.WebApp.expand();
     }
 
-    // ከ Render ሰርቨር የተመዘገቡትን ቻናሎች ያመጣል
     fetch('https://ethio-ad-bot-wz6h.onrender.com/api/channels')
       .then(response => response.json())
       .then(channels => {
@@ -111,10 +111,10 @@
           card.innerHTML = `
             <div>
               <h3>📢 ${ch.channel_name}</h3>
-              <a href="${ch.channel_link}" target="_blank">${ch.channel_link}</a>
+              <a class="link" href="${ch.channel_link}" target="_blank">${ch.channel_link}</a>
             </div>
-            <div class="price">${ch.final_price} ብር / 24 ሰዓት</div>
-            <a class="btn" href="https://t.me/EthioAdvert_bot?start=buy_${ch.id}">ይህን ቻናል ይዘዙ</a>
+            <div class="price">ከ ${ch.final_price} ብር ጀምሮ (24 ሰዓት)</div>
+            <button class="btn" onclick="orderChannel(${ch.id})">ይህን ቻናል ይዘዙ</button>
           `;
           container.appendChild(card);
         });
@@ -124,6 +124,13 @@
         document.getElementById('channel-list').innerHTML = 
           '<div class="loading">መረጃዎችን መጫን አልተቻለም። እባክዎ እንደገና ይሞክሩ።</div>';
       });
+
+    function orderChannel(channelId) {
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.close();
+      }
+      window.location.href = `https://t.me/EthioAdvert_bot?start=buy_${channelId}`;
+    }
   </script>
 </body>
 </html>
