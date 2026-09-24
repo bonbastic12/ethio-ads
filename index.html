@@ -55,6 +55,8 @@
       font-weight: bold;
       font-size: 14px;
       text-decoration: none;
+      cursor: pointer;
+      border: none;
     }
     .btn-visit {
       background: rgba(255, 255, 255, 0.1);
@@ -77,10 +79,22 @@
     <div class="detail">💰 ዋጋ፦ <span class="price">1,500 ብር / 24 ሰዓት</span></div>
     
     <div class="btn-group">
-      <a href="https://t.me/MRBENJA12" class="btn btn-visit">ቻናሉን እይ</a>
-      <a href="https://t.me/EthioAdvert_bot?start=order_mrodds" class="btn btn-order">ማስታወቂያ እዘዝ</a>
+      <a href="https://t.me/MRBENJA12" class="btn btn-visit" target="_blank">ቻናሉን እይ</a>
+      <button class="btn btn-order" onclick="orderChannel('MR ODDS (1,500 ብር)')">ማስታወቂያ እዘዝ</button>
     </div>
   </div>
 
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+
+    function orderChannel(channelName) {
+      // ለቦቱ የተመረጠውን ቻናል መልእክት ይልካል
+      tg.sendData(channelName);
+      // ዌብሳይቱን ወዲያውኑ ይዘጋል
+      tg.close();
+    }
+  </script>
 </body>
 </html>
