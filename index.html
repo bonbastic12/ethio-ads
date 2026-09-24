@@ -55,8 +55,7 @@
       font-weight: bold;
       font-size: 14px;
       text-decoration: none;
-      cursor: pointer;
-      border: none;
+      display: inline-block;
     }
     .btn-visit {
       background: rgba(255, 255, 255, 0.1);
@@ -80,21 +79,9 @@
     
     <div class="btn-group">
       <a href="https://t.me/MRBENJA12" class="btn btn-visit" target="_blank">ቻናሉን እይ</a>
-      <button class="btn btn-order" onclick="orderChannel('MR ODDS (1,500 ብር)')">ማስታወቂያ እዘዝ</button>
+      <a href="https://t.me/EthioAdvert_bot?text=MR%20ODDS%20ቻናል%20ላይ%20ማስታወቂያ%20ማስነገር%20እፈልጋለሁ" class="btn btn-order">ማስታወቂያ እዘዝ</a>
     </div>
   </div>
 
-  <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-
-    function orderChannel(channelName) {
-      // ለቦቱ የተመረጠውን ቻናል መልእክት ይልካል
-      tg.sendData(channelName);
-      // ዌብሳይቱን ወዲያውኑ ይዘጋል
-      tg.close();
-    }
-  </script>
 </body>
 </html>
