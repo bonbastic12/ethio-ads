@@ -10,78 +10,120 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       margin: 0;
       padding: 16px;
-      background-color: var(--tg-theme-bg-color, #18222d);
-      color: var(--tg-theme-text-color, #ffffff);
+      background-color: var(--tg-theme-bg-color, #f4f6f8);
+      color: var(--tg-theme-text-color, #222);
     }
-    h1 {
-      font-size: 19px;
+    header {
       text-align: center;
       margin-bottom: 20px;
-      color: #24A1DE;
     }
-    .card {
-      background: #232e3c;
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 15px;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-    }
-    .title {
-      font-size: 17px;
-      font-weight: bold;
-      color: #ffffff;
-      margin-bottom: 8px;
-    }
-    .detail {
-      font-size: 14px;
-      color: #8fa0af;
+    h1 {
+      font-size: 20px;
       margin-bottom: 6px;
     }
-    .price {
-      font-weight: bold;
-      color: #4cd964;
+    p.subtitle {
+      font-size: 13px;
+      color: #666;
+      margin-top: 0;
     }
-    .btn-group {
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+    .card {
+      background: var(--tg-theme-secondary-bg-color, #ffffff);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       display: flex;
-      gap: 10px;
-      margin-top: 12px;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card h3 {
+      margin: 0 0 6px 0;
+      font-size: 17px;
+    }
+    .card a {
+      color: #0088cc;
+      text-decoration: none;
+      font-size: 13px;
+      margin-bottom: 12px;
+      word-break: break-all;
+    }
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2e7d32;
+      margin-bottom: 12px;
     }
     .btn {
-      flex: 1;
-      text-align: center;
-      padding: 10px 0;
+      background-color: #0088cc;
+      color: #fff;
+      border: none;
+      padding: 10px;
       border-radius: 8px;
       font-weight: bold;
       font-size: 14px;
+      cursor: pointer;
+      text-align: center;
       text-decoration: none;
-      display: inline-block;
     }
-    .btn-visit {
-      background: rgba(255, 255, 255, 0.1);
-      color: #ffffff;
-    }
-    .btn-order {
-      background: #24A1DE;
-      color: #ffffff;
+    .loading {
+      text-align: center;
+      color: #777;
+      font-size: 15px;
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
 
-  <h1>📢 የቴሌግራም ቻናሎች ዝርዝር</h1>
+  <header>
+    <h1>የቴሌግራም ቻናል ማስታወቂያዎች</h1>
+    <p class="subtitle">የሚፈልጉትን ቻናል መርጠው በቀጥታ በቦቱ ያዝዙ</p>
+  </header>
 
-  <!-- ቻናል 1 -->
-  <div class="card">
-    <div class="title">MR ODDS (ቢዝነስ)</div>
-    <div class="detail">👥 ተከታዮች፦ 946</div>
-    <div class="detail">💰 ዋጋ፦ <span class="price">1,500 ብር / 24 ሰዓት</span></div>
-    
-    <div class="btn-group">
-      <a href="https://t.me/MRBENJA12" class="btn btn-visit" target="_blank">ቻናሉን እይ</a>
-      <a href="https://t.me/EthioAdvert_bot?text=MR%20ODDS%20ቻናል%20ላይ%20ማስታወቂያ%20ማስነገር%20እፈልጋለሁ" class="btn btn-order">ማስታወቂያ እዘዝ</a>
-    </div>
+  <div id="channel-list" class="grid">
+    <div class="loading">ቻናሎች እየተጫኑ ነው...</div>
   </div>
 
+  <script>
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+    }
+
+    // ከ Render ሰርቨር የተመዘገቡትን ቻናሎች ያመጣል
+    fetch('https://ethio-ad-bot-wz6h.onrender.com/api/channels')
+      .then(response => response.json())
+      .then(channels => {
+        const container = document.getElementById('channel-list');
+        container.innerHTML = '';
+
+        if (channels.length === 0) {
+          container.innerHTML = '<div class="loading">እስካሁን የተመዘገበ ቻናል የለም።</div>';
+          return;
+        }
+
+        channels.forEach(ch => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <div>
+              <h3>📢 ${ch.channel_name}</h3>
+              <a href="${ch.channel_link}" target="_blank">${ch.channel_link}</a>
+            </div>
+            <div class="price">${ch.final_price} ብር / 24 ሰዓት</div>
+            <a class="btn" href="https://t.me/EthioAdvert_bot?start=buy_${ch.id}">ይህን ቻናል ይዘዙ</a>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching channels:', error);
+        document.getElementById('channel-list').innerHTML = 
+          '<div class="loading">መረጃዎችን መጫን አልተቻለም። እባክዎ እንደገና ይሞክሩ።</div>';
+      });
+  </script>
 </body>
 </html>
