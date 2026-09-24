@@ -10,47 +10,59 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       margin: 0;
       padding: 16px;
-      background-color: var(--tg-theme-bg-color, #f4f6f8);
-      color: var(--tg-theme-text-color, #222);
+      background-color: var(--tg-theme-bg-color, #18222d);
+      color: var(--tg-theme-text-color, #ffffff);
     }
     h1 {
-      font-size: 20px;
+      font-size: 19px;
       text-align: center;
       margin-bottom: 20px;
-      color: #0088cc;
+      color: #24A1DE;
     }
     .card {
-      background: white;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      background: #232e3c;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
     }
     .title {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: bold;
-      margin-bottom: 6px;
+      color: #ffffff;
+      margin-bottom: 8px;
     }
     .detail {
-      font-size: 13px;
-      color: #666;
-      margin-bottom: 4px;
+      font-size: 14px;
+      color: #8fa0af;
+      margin-bottom: 6px;
     }
     .price {
       font-weight: bold;
-      color: #28a745;
+      color: #4cd964;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
     }
     .btn {
-      display: block;
-      width: 100%;
+      flex: 1;
       text-align: center;
-      background-color: #0088cc;
-      color: white;
-      text-decoration: none;
       padding: 10px 0;
       border-radius: 8px;
       font-weight: bold;
-      margin-top: 10px;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .btn-visit {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+    .btn-order {
+      background: #24A1DE;
+      color: #ffffff;
     }
   </style>
 </head>
@@ -63,10 +75,12 @@
     <div class="title">MR ODDS (ቢዝነስ)</div>
     <div class="detail">👥 ተከታዮች፦ 946</div>
     <div class="detail">💰 ዋጋ፦ <span class="price">1,500 ብር / 24 ሰዓት</span></div>
-    <a href="https://t.me/MRBENJA12" class="btn">ቻናሉን ጎብኝ</a>
+    
+    <div class="btn-group">
+      <a href="https://t.me/MRBENJA12" class="btn btn-visit">ቻናሉን እይ</a>
+      <a href="https://t.me/EthioAdvert_bot?start=order_mrodds" class="btn btn-order">ማስታወቂያ እዘዝ</a>
+    </div>
   </div>
-
-  <!-- ተጨማሪ ቻናሎች ሲመጡ እዚህ ጋር ይቀጥላሉ -->
 
 </body>
 </html>
